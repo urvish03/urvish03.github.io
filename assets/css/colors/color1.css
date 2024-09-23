@@ -1,0 +1,112 @@
+.brand-text {
+    color: #D65A51 !important;
+}
+
+.brand-text i {
+    color: #D65A51 !important;
+}
+
+.brand-bg,
+.sweet-alert button {
+    background-color: #D65A51 !important;
+}
+
+.blog-bg {
+    background-color: #aaa9a9 !important;
+   
+}
+
+.waves-effect.waves-brand  {
+    background-color: rgba(0, 188, 212, 0.66);
+}
+
+.p-overlay {
+    background-color: rgba(0, 188, 212, 0.9);
+}
+
+
+.circle-loader .path {
+    stroke: #D65A51;
+}
+
+
+.side-nav  li.current a,
+.side-nav  li a:hover {
+    border-bottom-color: #D65A51;
+}
+
+.static-menu li i:hover,
+.static-menu li a:hover,
+.submenu-ul li a:hover,
+.home-title span,
+.about-subtitle,
+.person-about > a.btn-large,
+.about-social ul li a i,
+.skill-title,
+.skill-count,
+.single-widget ul li a,
+.single-post-content a,
+.share-post li a:hover,
+.com-title a,
+span.num {
+    color: #D65A51;
+}
+
+.singel-hr-inner,
+.hr-wrap,
+.hrc:after,
+.thumb-slides-container.owl-theme .owl-controls .owl-page.active span,
+.blog-inner .card-content a.right:hover,
+.blog-inner .card-content a.right:focus,
+.contact-form .submit-btn:hover,
+.contact-form .submit-btn:focus,
+a.tags,
+.blog-inner .card-content a.right:active {
+    background-color: #D65A51;
+}
+
+.contact-form .materialize-textarea:focus,
+.contact-form .input-box:focus {
+    border-color: #D65A51;
+    box-shadow: 0px 1px 0px #D65A51;
+}
+
+
+.single-post-content blockquote {
+    border-left: 5px solid #D65A51;
+}
+
+
+
+@-webkit-keyframes color {
+    0%   {stroke: #D65A51;}
+    20%  {stroke: #D65A51;}
+    25%  {stroke: #D65A51;}
+    45%  {stroke: #D65A51;}
+    50%  {stroke: #D65A51;}
+    70%  {stroke: #D65A51;}
+    75%  {stroke: #D65A51;}
+    95%  {stroke: #D65A51;}
+}
+
+@keyframes color {
+    0%   {stroke: #D65A51;}
+    20%  {stroke: #D65A51;}
+    25%  {stroke: #D65A51;}
+    45%  {stroke: #D65A51;}
+    50%  {stroke: #D65A51;}
+    70%  {stroke: #D65A51;}
+    75%  {stroke: #D65A51;}
+    95%  {stroke: #D65A51;}
+}
+
+
+/* Add your CSS below */
+
+
+
+
+.menu-select [type="radio"]:checked + label:after {
+    border-color: #D65A51;
+    background-color: #D65A51;
+}
