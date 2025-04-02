@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Holograms, light-leaks and how to build CSS-only shaders - Robb Owen</title>
+        <meta name="description" content="Get a shiny WebGL look without actually using WebGL. In this article we take a look at how CSS blend modes unleash the potential of cool compositing effects without the need for JavaScript">
+        <meta name="theme-color" content="#69ecc6">
+        <meta name="color-scheme" content="only light">
+        <link rel="apple-touch-icon" sizes="180x180" href="../robbowen.digital/assets/img/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="../robbowen.digital/assets/img/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../robbowen.digital/assets/img/favicon-16x16.png">
+        <link rel="icon" type="image/png" href="../robbowen.digital/assets/img/favicon.ico">
+        <link href="https://front-end.social/@robb" rel="me">
+        <meta property="og:site_name" content="Robb Owen Digital">
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="en_gb">
+        <meta property="og:url" content="https://robbowen.digital/wrote-about/css-blend-mode-shaders/">
+        <meta property="og:title" content="Holograms, light-leaks and how to build CSS-only shaders - Robb Owen ">
+        <meta property="og:description" content="Get a shiny WebGL look without actually using WebGL. In this article we take a look at how CSS blend modes unleash the potential of cool compositing effects without the need for JavaScript">
+        <meta property="og:image" content="https://robbowen.digital/assets/img/cards/css-blend-mode-shaders.png">
+        <meta name="twitter:image" content="https://robbowen.digital/assets/img/cards/css-blend-mode-shaders.png">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:creator" content="@Robb0wen">
+        <link href="/feed.xml" rel="alternate" type="application/rss+xml" title="RSS Feed">
+        <script>
+            document.querySelector('html').classList.add('js');
+            document.querySelector('html').classList.remove('no-js');
+        </script>
+        <link href="https://fonts.googleapis.com/css?family=Kantumruy Pro:500,700&amp;display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../robbowen.digital/assets/css/styles.css">
+        <style id="theme">
+            :root {
+                --bg: #f9f6f9;
+                --line: #6000cb;
+                --fill: #69ecc6;
+                --text: #0a094a;
+                --subtext: #2229aa;
+                --duo: #91d8c4
+            }
+
+            .stripes {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22.93 22.93'%3E%3Cpolygon fill='%2369ecc6' points='0 8.18 14.75 22.93 22.74 22.93 0 0.19 0 8.18'/%3E%3Cpolygon fill='%2369ecc6' points='22.93 8.37 22.93 0.38 22.56 0 14.56 0 22.93 8.37'/%3E%3C/svg%3E");
+                background-size: 11px;
+                opacity: .6
+            }
+
+            .dots {
+                background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 22.9 22.9' style='enable-background:new 0 0 22.9 22.9;' xml:space='preserve'%3E%3Ccircle fill='%2369ecc6' class='st0' cx='5.7' cy='5.9' r='3'/%3E%3Ccircle fill='%2369ecc6' class='st0' cx='17.2' cy='17.2' r='3'/%3E%3C/svg%3E%0A");
+                background-size: 12px
+            }
+        </style>
+    </head>
+    <body>
+        <a class="skip-link u-vhide" href="#main-content">Skip to content</a>
+        <div class="loading loading--in">
+            <div class="loading__mask"></div>
+            <div class="loader">
+                <div class="lds-ellipsis">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <div class="pagewrap">
+            <div class="mainnav">
+                <div class="logo-wrap">
+                    <a href="/">
+                        <span class="u-vhide">Back to the homepage</span>
+                        <span class="logo js-logo">
+                            <div class="logo__blorenge">
+                                <div class="shade" data-drift="-10 -10">
+                                    <svg version="1.1" x="0px" y="0px" viewBox="0 0 256 256">
+                                        <polygon class="filled-poly" points="172,110 98,110 36.2,188 110.2,188 159.7,188 233.7,188 "></polygon>
+                                    </svg>
+                                </div>
+                                <div class="logo">
+                                    <svg version="1.1" x="0px" y="0px" viewBox="0 0 256 256">
+                                        <polygon class="stroke-poly" points="90,99 28.2,177 151.7,177 "></polygon>
+                                        <polygon class="stroke-poly" points="164,99 102.2,177 225.7,177 "></polygon>
+                                        <line class="stroke-poly" x1="90" y1="99" x2="163.8" y2="99"></line>
+                                    </svg>
+                                </div>
+                            </div>
+                        </span>
+                    </a>
+                </div>
+                <div class="menu-link">
+                    <button class="menu-link__trigger js-menu-trigger" aria-expanded="false" aria-controls="main-menu">
+                        <span class="menu-link__mask">
+                            <span class="menu-link__label menu-link__label--close js-menu-label-close" aria-hidden="true">Close</span>
+                            <span class="menu-link__label menu-link__label--open js-menu-label-open" aria-hidden="false">Menu</span>
+                        </span>
+                    </button>
+                </div>
+                <a class="hire-me" href="mailto:hello@robbowen.digital?subject=🤘 Hi Robb, I'd like to hire you">
+                    <div class="shade" data-drift="-4 -6" data-drift-center="y">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
+                            <path class="filled-path" d="M30.78,9.87c13.52,0,24.46,9.58,24.46,21.41a19.4,19.4,0,0,1-5,12.95h0l2.9,9.82L42.37,50.1h0a27.51,27.51,0,0,1-11.59,2.58,26.84,26.84,0,0,1-14-3.86C10.42,45,6.24,38.52,6.24,31.2,6.24,19.53,17.26,9.87,30.78,9.87Z"></path>
+                        </svg>
+                    </div>
+                    <div class="main">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
+                            <path class="stroke-path" d="M27.78,5.87c13.52,0,24.46,9.58,24.46,21.41a19.4,19.4,0,0,1-5,12.95h0l2.9,9.82L39.37,46.1h0a27.51,27.51,0,0,1-11.59,2.58,26.84,26.84,0,0,1-14-3.86C7.42,41,3.24,34.52,3.24,27.2,3.24,15.53,14.26,5.87,27.78,5.87Z"></path>
+                        </svg>
+                    </div>
+                    Hire me
+                </a>
+            </div>
+            <div class="main-menu js-menu" id="main-menu">
+                <div class="main-menu__mask"></div>
+                <div class="main-menu__flyout">
+                    <div class="main-menu__inr wrap">
+                        <ul class="social-links">
+                            <li class="social-links__item">
+                                <a class="social-links__link social-links__link--ma" href="https://front-end.social/@Robb" rel="noopener noreferrer" target="_blank">Follow me on Mastodon</a>
+                            </li>
+                            <li class="social-links__item">
+                                <a class="social-links__link social-links__link--in" href="http://www.instagram.com/robb0wen" rel="noopener noreferrer" target="_blank">Follow me on Instagram</a>
+                            </li>
+                            <li class="social-links__item">
+                                <a class="social-links__link social-links__link--gh" href="https://github.com/robb0wen" rel="noopener noreferrer" target="_blank">Visit my GitHub</a>
+                            </li>
+                            <li class="social-links__item">
+                                <a class="social-links__link social-links__link--rss" href="/feed.xml" rel="noopener noreferrer" target="_blank" data-rekishi-skip="">Subscribe to my RSS feed</a>
+                            </li>
+                            <li class="social-links__item">
+                                <a class="social-links__link social-links__link--email" href="mailto:hello@robbowen.digital" rel="noopener noreferrer" target="_blank">Send me an Email</a>
+                            </li>
+                        </ul>
+                        <ul class="main-menu__links primary-links">
+                            <li class="primary-links__item">
+                                <a aria-current="page" class="primary-links__link t-primary" href="/" aria-describedby="desc_home">Home</a>
+                                <span id="desc_home" class="primary-links__summary">Back to the home page.</span>
+                            </li>
+                            <li class="primary-links__item">
+                                <a aria-current="page" class="primary-links__link t-primary" href="/work" aria-describedby="desc_work">Work</a>
+                                <span id="desc_work" class="primary-links__summary">My approach to development.</span>
+                            </li>
+                            <li class="primary-links__item">
+                                <a class="primary-links__link t-primary" href="/about" aria-describedby="desc_about">About</a>
+                                <span id="desc_about" class="primary-links__summary">A little about me and my background.</span>
+                            </li>
+                            <li class="primary-links__item">
+                                <a class="primary-links__link t-primary" href="/writing" aria-describedby="desc_writing">Writing</a>
+                                <span id="desc_writing" class="primary-links__summary">My latest writing on tech and language.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" class="page-body" tabindex="-1"></main>
+                <svg style="position:absolute;top:-900px;left:-900px;clip:rect(0,0,0,0)">
+                    <filter id="duotone_filter">
+                        <feColorMatrix type="matrix" result="grayscale" values="1 0 0 0 0
+                  1 0 0 0 0
+                  1 0 0 0 0
+                  0 0 0 1 0"></feColorMatrix>
+                        <feComponentTransfer color-interpolation-filters="sRGB" result="duotone">
+                            <feFuncR type="table" tableValues="0.00784313725490196 0.6039215686274509"></feFuncR>
+                            <feFuncG type="table" tableValues="0.34509803921568627 0.9921568627450981"></feFuncG>
+                            <feFuncB type="table" tableValues="0.25098039215686274 0.8823529411764706"></feFuncB>
+                            <feFuncA type="table" tableValues="0 1"></feFuncA>
+                        </feComponentTransfer>
+                    </filter>
+                </svg>
+                <div class="article" data-reveal="is-onscreen">
+                    <div>
+                        <div class="article-heading">
+                            <span class="article-heading__byline">7th July 2022</span>
+                            <h1 class="article-heading__title t-heading t-medium:s t-big:m t-bigger:l">
+                                <span>
+                                    API Lifecycle: A Developer Perspective<span class="dot">.</span>
+                                </span>
+                                <span>
+                                    APIs power our digital world. Let's dive deep into their ecosystem:<span class="dot">.</span>
+                                </span>
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="article__content flow reveal-content">
+                        <style>
+                            .spec-example {
+                                margin: 50px 0;
+                                display: flex;
+                                justify-content: space-between;
+                                gap: 2.5rem
+                            }
+
+                            .spec-example__fixed,.spec-example__static {
+                                flex: 1;
+                                border: 20px solid #fff;
+                                height: 30rem;
+                                background-image: linear-gradient(to bottom,#000 20%,#3c5e6d 35%,#f4310e,#f58308 80%,#000)
+                            }
+
+                            @media (max-width: 512px) {
+                                .spec-example__fixed,.spec-example__static {
+                                    border-width:10px
+                                }
+                            }
+
+                            .spec-example__fixed {
+                                background-attachment: fixed
+                            }
+
+                            .frame {
+                                position: relative;
+                                margin: 25px auto;
+                                max-width: 830px;
+                                border: 20px solid #fff;
+                                background: #000
+                            }
+
+                            @media (max-width: 512px) {
+                                .frame {
+                                    border-width:10px
+                                }
+                            }
+
+                            .frame img {
+                                display: block;
+                                width: 100%;
+                                max-width: 790px;
+                                height: auto;
+                                margin: 0
+                            }
+
+                            .shader {
+                                backface-visibility: hidden;
+                                position: relative;
+                                display: block;
+                                overflow: hidden
+                            }
+
+                            .shader.is-waiting .shader__layer,.shader.is-waiting .shader__layer::after,.shader.is-waiting .shader__layer::before {
+                                display: none
+                            }
+
+                            .mask,.mask::after,.mask::before,.specular,.specular::after {
+                                background-color: #000;
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                width: 100%;
+                                height: 100%;
+                                backface-visibility: hidden
+                            }
+
+                            .specular {
+                                background-color: #000;
+                                mix-blend-mode: color-dodge;
+                                background-attachment: fixed
+                            }
+
+                            .frame--asakusa .specular {
+                                z-index: 0;
+                                background-color: #000;
+                                background-position: center;
+                                background-size: cover;
+                                mix-blend-mode: color-dodge;
+                                background-attachment: fixed;
+                                background-image: linear-gradient(to bottom,#000 20%,#3c5e6d 35%,#f4310e,#f58308 80%,#000)
+                            }
+
+                            .frame--asakusa .mask {
+                                z-index: 1;
+                                background: #fff;
+                                background-size: 100%;
+                                mix-blend-mode: multiply;
+                                background-image: linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.2)),url(/assets/img/articles/holo/tower_spec.jpg)
+                            }
+
+                            .frame--sticker .specular {
+                                z-index: 0;
+                                background-position: top center;
+                                background-image: linear-gradient(125deg,#f09 30%,#fc8b00,#ff0,#00ff8a,#00cfff,#cc4cfa 70%)
+                            }
+
+                            .frame--sticker .mask {
+                                background-repeat: no-repeat;
+                                background-size: 45%;
+                                background-position: center;
+                                z-index: 1;
+                                mix-blend-mode: multiply;
+                                background-image: url(/assets/img/articles/holo/hologram.png)
+                            }
+
+                            .frame--sticker .mask::after {
+                                content: '';
+                                background-position: center;
+                                background-attachment: fixed;
+                                z-index: 1;
+                                mix-blend-mode: color-burn;
+                                background-image: linear-gradient(45deg,#333 40%,#ddd 60%,#333)
+                            }
+
+                            .frame--leak .specular {
+                                z-index: 0;
+                                mix-blend-mode: color-dodge;
+                                background-color: #000;
+                                background-position: top center;
+                                background-repeat: no-repeat;
+                                mix-blend-mode: color-dodge;
+                                background-attachment: fixed;
+                                background-image: linear-gradient(179deg,#000 40%,red,orange,#fff 60%,#000 80%)
+                            }
+
+                            .frame--leak .mask {
+                                mix-blend-mode: multiply;
+                                background-color: #fff;
+                                background-size: cover;
+                                background-image: url(/assets/img/articles/holo/pinelake_mask.jpg)
+                            }
+
+                            .frame--aurora .specular {
+                                z-index: 0;
+                                background-color: #000;
+                                background-position: center;
+                                background-size: 100% 80%;
+                                mix-blend-mode: screen;
+                                background-attachment: fixed;
+                                background-image: linear-gradient(180deg,#3fd351,#08f,#8000ff,#08f,#3fd351)
+                            }
+
+                            .frame--aurora .mask {
+                                z-index: 1;
+                                background: #fff;
+                                background-size: cover;
+                                mix-blend-mode: multiply;
+                                background-image: linear-gradient(to bottom,rgba(0,0,0,.25) 15%,transparent),url(/assets/img/articles/holo/forest_spec.jpg)
+                            }
+
+                            .blend-example {
+                                margin: 50px 0;
+                                box-sizing: content-box;
+                                border: 20px solid #fff;
+                                height: min(352px,45vw);
+                                display: grid;
+                                grid-template-columns: repeat(var(--cols,2),1fr);
+                                grid-template-rows: 1fr
+                            }
+
+                            @media (max-width: 512px) {
+                                .blend-example {
+                                    border-width:10px
+                                }
+                            }
+
+                            .blend-example__col {
+                                position: relative
+                            }
+
+                            .blend-example__col img {
+                                width: 100%;
+                                height: min(352px,45vw);
+                                object-fit: cover
+                            }
+
+                            .blend-example__layer {
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 100%;
+                                mix-blend-mode: var(--blend);
+                                filter: brightness(.99)
+                            }
+
+                            .example {
+                                margin: 50px 0
+                            }
+
+                            .example--mask .mask,.example--mask .specular,.example--spec .specular,.example--specmask .specular {
+                                mix-blend-mode: normal
+                            }
+
+                            .example--off .specular,.example--spec .specular .mask,.example--specbase .mask {
+                                display: none
+                            }
+                        </style>
+                        <div style="margin-top: 50px">
+                            <img style="size: 50%;" src="../robbowen.digital/assets/img/SafetyBanner.jpg" alt="How to Protect Yourself & Others From CoronaVirus">
+                            
+                        </div>
+
+                        <div style="margin-top: 50px">
+                            <h4 class="t-heading t-lede:s t-medium:m t-medium:l">
+                                𝟴 𝗘𝘀𝘀𝗲𝗻𝘁𝗶𝗮𝗹 𝗔𝗣𝗜 𝗧𝘆𝗽𝗲𝘀:
+                            </h4>
+                            <p>
+                                <ul>
+                                    <li><strong>REST (REpresentational State Transfer)</strong>: A scalable, stateless architecture for building web services.</li>
+                                    <li><strong>SOAP (Simple Object Access Protocol)</strong>: An XML-based messaging protocol for exchanging structured information.</li>
+                                    <li><strong>GraphQL</strong>: A query language for APIs that allows clients to specify exactly what data they need.</li>
+                                    <li><strong>AMQP (Advanced Message Queuing Protocol)</strong>: A reliable and flexible messaging protocol for distributed systems.</li>
+                                    <li><strong>MQTT (Message Queuing Telemetry Transport)</strong>: A lightweight, publish-subscribe messaging protocol designed for IoT devices.</li>
+                                    <li><strong>WebSocket</strong>: A protocol for full-duplex, bidirectional communication over a single TCP connection.</li>
+                                    <li><strong>gRPC</strong>: A high-performance, open-source RPC framework that uses HTTP/2 for transport and Protocol Buffers for serialization.</li>
+                                    <li><strong>Webhook</strong>: An HTTP callback triggered by events in a third-party application.</li>
+                                  </ul>
+                            </p>
+                        </div>
+
+                        <div style="margin-top: 50px">
+                            <img class="" src="../robbowen.digital/assets/img/Mask.jpg" alt="𝟵 𝗖𝗿𝘂𝗰𝗶𝗮𝗹 𝗔𝗣𝗜 𝗠𝗲𝘁𝗵𝗼𝗱𝘀:">
+                            <h4 class="t-heading t-lede:s t-medium:m t-medium:l" >
+                                𝟵 𝗖𝗿𝘂𝗰𝗶𝗮𝗹 𝗔𝗣𝗜 𝗠𝗲𝘁𝗵𝗼𝗱𝘀:
+                            </h4>
+                            <p>
+                                <ul>
+                                    <li><strong>GET</strong>: Retrieves data from the server.</li>
+                                    <li><strong>POST</strong>: Creates new resources on the server.</li>
+                                    <li><strong>PUT</strong>: Updates existing resources on the server.</li>
+                                    <li><strong>DELETE</strong>: Removes resources from the server.</li>
+                                    <li><strong>PATCH</strong>: Partially modifies existing resources on the server.</li>
+                                    <li><strong>HEAD</strong>: Requests metadata about a resource without returning the body.</li>
+                                    <li><strong>OPTIONS</strong>: Requests information about the communication options available for a resource.</li>
+                                    <li><strong>CONNECT</strong>: Establishes a network connection to a resource.</li>
+                                    <li><strong>TRACE</strong>: Performs a message loop-back test to diagnose network problems.</li>
+                                  </ul>
+                            </p>
+                        </div>
+                        <div style="margin-top: 50px">
+                            <img class="" src="../robbowen.digital/assets/img/SocialDistance.png" alt="Key Status Codes to Know:">
+                            <h4 class="t-heading t-lede:s t-medium:m t-medium:l" >
+                                Key Status Codes to Know:
+                            </h4>
+                            <p>
+                                <ul>
+                                    <li><strong>2xx: Success</strong></li>
+                                    <ul>
+                                      <li>200 OK: The request has succeeded.</li>
+                                      <li>201 Created: The request has succeeded, and a new resource has been created.</li>
+                                    </ul>
+                                    <li><strong>3xx: Redirection</strong></li>
+                                    <ul>
+                                      <li>301 Moved Permanently: The requested resource has been permanently moved to a new location.</li>
+                                    </ul>
+                                    <li><strong>4xx: Client Errors</strong></li>
+                                    <ul>
+                                      <li>400 Bad Request: The server cannot or will not process the request due to a client error.</li>
+                                      <li>404 Not Found: The requested resource could not be found.</li>
+                                    </ul>
+                                    <li><strong>5xx: Server Errors</strong></li>
+                                    <ul>
+                                      <li>500 Internal Server Error: The server encountered an unexpected condition that prevented it from fulfilling the request.</li>
+                                    </ul>
+                                  </ul>
+                            </p>
+                        </div>
+                        <div style="margin-top: 50px">
+                            <img class="" src="../robbowen.digital/assets/img/WashHand.png" alt="𝗔𝗣𝗜 𝗗𝗲𝘀𝗶𝗴𝗻 𝗕𝗲𝘀𝘁 𝗣𝗿𝗮𝗰𝘁𝗶𝗰𝗲𝘀:">
+                            <h4 class="t-heading t-lede:s t-medium:m t-medium:l" >
+                                𝗔𝗣𝗜 𝗗𝗲𝘀𝗶𝗴𝗻 𝗕𝗲𝘀𝘁 𝗣𝗿𝗮𝗰𝘁𝗶𝗰𝗲𝘀:
+                            </h4>
+                            <p>
+                                <ul>
+                                    <li><strong>Use clear, versioned endpoints</strong> (e.g., /api/v2/articles) to indicate the API version and prevent breaking changes.</li>
+                                    <li><strong>Implement filtering, sorting, and pagination</strong> to allow clients to customize the data returned.</li>
+                                    <li><strong>Use robust authentication</strong> (e.g., OAuth 2.0, JWT) to protect your API from unauthorized access.</li>
+                                    <li><strong>Specify accepted content types</strong> (e.g., application/json) to ensure compatibility with different clients.</li>
+                                    <li><strong>Provide comprehensive documentation</strong> to guide developers on how to use your API.</li>
+                                    <li><strong>Implement rate limiting</strong> to prevent abuse and ensure API stability.</li>
+                                    <li><strong>Provide consistent error handling and messaging</strong> to help developers troubleshoot and debug issues.</li>
+                                  </ul>
+                            </p>
+                        </div>
+                        <div style="margin-top: 50px">
+                            <img class="" src="../robbowen.digital/assets/img/StayHome.png" alt="Monitor your health daily">
+                            <h4 class="t-heading t-lede:s t-medium:m t-medium:l" >
+                                Monitor your health daily
+                            </h4>
+                            <p>Be alert for symptoms. Watch for fever, cough, shortness of breath, or other symptoms of COVID-19.</p>
+                                <ul><li>Especially important if you are running essential errands, going into the office or workplace, and in settings where it may be difficult to keep a physical distance of 6 feet.</li></ul>
+
+                            <p>Take your temperature if symptoms develop.</p>
+                                <ul><li>Don’t take your temperature within 30 minutes of exercising or after taking medications that could lower your temperature, like acetaminophen.</li></ul>
+
+                            <p>Follow CDC guidance if symptoms develop.</p>
+                        </div>
+                        <div style="margin-top: 50px">
+                            <img class="" src="../robbowen.digital/assets/img/Vaccinated.jpg" alt="Coronavirus Vaccine - Get Vaccinated">
+                            <h4 class="t-heading t-lede:s t-medium:m t-medium:l">
+                                Coronavirus Vaccine - Get Vaccinated
+                            </h4>
+                            <p>
+                                <ul>
+                                    <li>Vaccines are designed to help our immune system fight off against infectious diseases, so uou don't get sick and don't spread the disease.</li>
+
+                                    <li>COVID-19 vaccination will be an important tool to help stop the pandemic.</li>
+
+                                    <li>A growing body of evidence suggests that fully vaccinated people are less likely to be infected without showing symptoms (called an asymptomatic infection) and potentially less likely to spread the virus that causes COVID-19 to others.</li>
+
+                                    <li>Once you are fully vaccinated, you may be able to start doing some things that you had stopped doing because of the pandemic.</li>
+
+                                </ul>
+                            </p>
+                        </div>
+                        <div style="margin-top: 50px">
+                            <img  src="../robbowen.digital/assets/img/Clean&Disinfect.jpg" alt="Clean & Disinfect Your Home When Someone Is Sick">
+                            <h4 class="t-heading t-lede:s t-medium:m t-medium:l">
+                                Clean & Disinfect Your Home When Someone Is Sick
+                            </h4>
+                            <p>
+                                <ul>
+                                    <li>Clean high touch surfaces daily. This includes tables, doorknobs, light switches, countertops, handles, desks, phones, keyboards, toilets, faucets, and sinks.</li>
+
+                                    <li>If someone is sick or has tested positive for COVID-19, disinfect frequently touched surfaces.</li>
+
+                                    <li>If surfaces are dirty, clean them using detergent or soap and water prior to disinfection.</li>
+
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                    <footer class="article__footer">
+                        <div class="author">
+                            <div class="author__inr">
+                                <div class="author__portrait">
+                                    <div class="portrait">
+                                        <span class="portrait__bg dots" data-drift="-10 -10"></span>
+                                        <div class="portrait__image">
+                                            <span class="duotone">
+                                                <img src="../robbowen.digital/assets/img/portrait_small.jpg">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="author__bio flow">
+                                    <h4 class="t-heading t-sublede:s t-lede:m t-medium:l">
+                                        Hi, my name is Urvish<span class="dot">.</span>
+                                    </h4>
+                                    <p>I'm a freelance creative developer helping awesome people to build ambitious yet accessible web projects.</p>
+                                    <a href="mailto:urvish03@gmail.com?subject=🤘 Hi Urvish, I'd like to hire you" class="btn author__cta">
+                                        <span class="btn__label">Hire me</span>
+                                        <span class="btn__fill stripes" data-drift="-10 -12" aria-hidden="true">Hire me</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </main>
+            <small class="made-in-wales">© MMXXIV. Gwneud yn Ne Cymru.</small>
+        </div>
+        <script src="../robbowen.digital/assets/js/main.js"></script>
+        <script class="custom-js" src="../robbowen.digital/assets/js/articles/shader.js"></script>
+    </body>
+</html>
