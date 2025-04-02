@@ -8,19 +8,19 @@
         <meta name="description" content="Get a shiny WebGL look without actually using WebGL. In this article we take a look at how CSS blend modes unleash the potential of cool compositing effects without the need for JavaScript">
         <meta name="theme-color" content="#69ecc6">
         <meta name="color-scheme" content="only light">
-        <link rel="apple-touch-icon" sizes="180x180" href="../robbowen.digital/assets/img/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="../robbowen.digital/assets/img/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="../robbowen.digital/assets/img/favicon-16x16.png">
-        <link rel="icon" type="image/png" href="../robbowen.digital/assets/img/favicon.ico">
+        <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16x16.png">
+        <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
         <link href="https://front-end.social/@robb" rel="me">
         <meta property="og:site_name" content="Robb Owen Digital">
         <meta property="og:type" content="website">
         <meta property="og:locale" content="en_gb">
-        <meta property="og:url" content="https://robbowen.digital/wrote-about/css-blend-mode-shaders/">
+        <meta property="og:url" content="https://wrote-about/css-blend-mode-shaders/">
         <meta property="og:title" content="Holograms, light-leaks and how to build CSS-only shaders - Robb Owen ">
         <meta property="og:description" content="Get a shiny WebGL look without actually using WebGL. In this article we take a look at how CSS blend modes unleash the potential of cool compositing effects without the need for JavaScript">
-        <meta property="og:image" content="https://robbowen.digital/assets/img/cards/css-blend-mode-shaders.png">
-        <meta name="twitter:image" content="https://robbowen.digital/assets/img/cards/css-blend-mode-shaders.png">
+        <meta property="og:image" content="https://assets/img/cards/css-blend-mode-shaders.png">
+        <meta name="twitter:image" content="https://assets/img/cards/css-blend-mode-shaders.png">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:creator" content="@Robb0wen">
         <link href="/feed.xml" rel="alternate" type="application/rss+xml" title="RSS Feed">
@@ -29,7 +29,7 @@
             document.querySelector('html').classList.remove('no-js');
         </script>
         <link href="https://fonts.googleapis.com/css?family=Kantumruy Pro:500,700&amp;display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="../robbowen.digital/assets/css/styles.css">
+        <link rel="stylesheet" href="../assets/css/styles.css">
         <style id="theme">
             :root {
                 --bg: #f9f6f9;
@@ -392,7 +392,7 @@
                         <p>Let's take a look at an example. As you scroll past the image below, the sunlight blooms a warm orange, before fading to a cool blue. You'll also briefly see some lens bokeh.</p>
                         <div class="frame frame--asakusa">
                             <div class="shader">
-                                <img src="../robbowen.digital/assets/img/articles/holo/tower.jpg" alt="Asakusa at dusk">
+                                <img src="../assets/img/articles/holo/tower.jpg" alt="Asakusa at dusk">
                                 <div class="shader__layer specular">
                                     <div class="shader__layer mask"></div>
                                 </div>
@@ -681,10 +681,10 @@
                         <p>Below you can see the images that we'll be using for these examples. On the left is the upper layer to be blended, and the right is the base image we'll be blending onto.</p>
                         <div class="blend-example">
                             <div class="blend-example__col">
-                                <img src="../robbowen.digital/assets/img/articles/holo/mask-layer.jpg" alt="Black and white concentric circles, with two grey semi-circles at the centre">
+                                <img src="../assets/img/articles/holo/mask-layer.jpg" alt="Black and white concentric circles, with two grey semi-circles at the centre">
                             </div>
                             <div class="blend-example__col">
-                                <img src="../robbowen.digital/assets/img/about/lakebled.jpg" alt="Lake bled from above">
+                                <img src="../assets/img/about/lakebled.jpg" alt="Lake bled from above">
                             </div>
                         </div>
                         <p>
@@ -695,9 +695,9 @@
                         </p>
                         <div class="blend-example" style="--cols:1">
                             <div class="blend-example__col">
-                                <img src="../robbowen.digital/assets/img/about/lakebled.jpg" alt="Lake bled from above">
+                                <img src="../assets/img/about/lakebled.jpg" alt="Lake bled from above">
                                 <div class="blend-example__layer" style="--blend:multiply">
-                                    <img src="../robbowen.digital/assets/img/articles/holo/mask-layer.jpg" alt="Black and white concentric circles, with two grey semi-circles at the centre">
+                                    <img src="../assets/img/articles/holo/mask-layer.jpg" alt="Black and white concentric circles, with two grey semi-circles at the centre">
                                 </div>
                             </div>
                         </div>
@@ -710,9 +710,9 @@
                         </p>
                         <div class="blend-example" style="--cols:1">
                             <div class="blend-example__col">
-                                <img src="../robbowen.digital/assets/img/about/lakebled.jpg" alt="Lake bled from above">
+                                <img src="../assets/img/about/lakebled.jpg" alt="Lake bled from above">
                                 <div class="blend-example__layer" style="--blend:screen">
-                                    <img src="../robbowen.digital/assets/img/articles/holo/mask-layer.jpg" alt="Black and white concentric circles, with two grey semi-circles at the centre">
+                                    <img src="../assets/img/articles/holo/mask-layer.jpg" alt="Black and white concentric circles, with two grey semi-circles at the centre">
                                 </div>
                             </div>
                         </div>
@@ -738,15 +738,15 @@
                         </p>
                         <div class="blend-example" style="--cols:2">
                             <div class="blend-example__col">
-                                <img src="../robbowen.digital/assets/img/about/lakebled.jpg" alt="Lake bled from above">
+                                <img src="../assets/img/about/lakebled.jpg" alt="Lake bled from above">
                                 <div class="blend-example__layer" style="--blend:color-burn">
-                                    <img src="../robbowen.digital/assets/img/articles/holo/mask-layer.jpg" alt="Black and white concentric circles, with two grey semi-circles at the centre">
+                                    <img src="../assets/img/articles/holo/mask-layer.jpg" alt="Black and white concentric circles, with two grey semi-circles at the centre">
                                 </div>
                             </div>
                             <div class="blend-example__col">
-                                <img src="../robbowen.digital/assets/img/about/lakebled.jpg" alt="Lake bled from above">
+                                <img src="../assets/img/about/lakebled.jpg" alt="Lake bled from above">
                                 <div class="blend-example__layer" style="--blend:color-dodge">
-                                    <img src="../robbowen.digital/assets/img/articles/holo/mask-layer.jpg" alt="Black and white concentric circles, with two grey semi-circles at the centre">
+                                    <img src="../assets/img/articles/holo/mask-layer.jpg" alt="Black and white concentric circles, with two grey semi-circles at the centre">
                                 </div>
                             </div>
                         </div>
@@ -754,7 +754,7 @@
                             Compositing layers<span class="dot">.</span>
                             <a href="#compositing-layers" class="u-vhide">permalink</a>
                         </h2>
-                        <img src="../robbowen.digital/assets/img/articles/holo/composite-diagram.jpg" alt="A diagram summarising how layers can be composited together to form a new image">
+                        <img src="../assets/img/articles/holo/composite-diagram.jpg" alt="A diagram summarising how layers can be composited together to form a new image">
                         <p>Now we know what we're working with, it might seem like the next step would be to slap a blend mode onto our gradient, place it over our base image and call it a day. That will definitely work, but it won't reach the level of quality we're going for.</p>
                         <p>
                             Blending the gradient directly to the base layer will mean that the lighting will be totally uniform across the image. Aside from chromed surfaces, that doesn't happen too often in nature. To really sell the effect we want to have control over the areas of the image where light can fall and where it can't. To simulate this, we can use a predominately dark image to mask out our gradient. This technique of using a dark image to mask off areas of a lighter one is often known as a <em>specular map</em>
@@ -878,7 +878,7 @@
                             on our <code>.mask</code>
                             layer and throw away the parts of our gradient where we don't want light to show through.
                         </p>
-                        <img src="../robbowen.digital/assets/img/articles/holo/composite-diagram-multiply.jpg" alt="Two images are combined with a multiply blend to form a mask">
+                        <img src="../assets/img/articles/holo/composite-diagram-multiply.jpg" alt="Two images are combined with a multiply blend to form a mask">
                         <pre class="language-css">
                             <code class="language-css">
                                 <span class="highlight-line">
@@ -943,7 +943,7 @@
                             .
                         </p>
                         <p>Let's take a look:</p>
-                        <img src="../robbowen.digital/assets/img/articles/holo/composite-diagram-dodge.jpg" alt="two images are combined with color-dodge blend to form a bloom effect">
+                        <img src="../assets/img/articles/holo/composite-diagram-dodge.jpg" alt="two images are combined with color-dodge blend to form a bloom effect">
                         <pre class="language-css">
                             <code class="language-css">
                                 <span class="highlight-line">
@@ -1276,7 +1276,7 @@
                             </div>
                             <div class="frame frame--asakusa">
                                 <div class="shader">
-                                    <img src="../robbowen.digital/assets/img/articles/holo/tower.jpg" alt="Asakusa at dusk">
+                                    <img src="../assets/img/articles/holo/tower.jpg" alt="Asakusa at dusk">
                                     <div class="shader__layer specular">
                                         <div class="shader__layer mask"></div>
                                     </div>
@@ -1317,7 +1317,7 @@
                             </div>
                             <div class="frame frame--aurora">
                                 <div class="shader">
-                                    <img src="../robbowen.digital/assets/img/articles/holo/forest.jpg" alt="A pine forest at night">
+                                    <img src="../assets/img/articles/holo/forest.jpg" alt="A pine forest at night">
                                     <div class="shader__layer specular">
                                         <div class="shader__layer mask"></div>
                                     </div>
@@ -1347,7 +1347,7 @@
                             </div>
                             <div class="frame frame--leak">
                                 <div class="shader">
-                                    <img src="../robbowen.digital/assets/img/articles/holo/pinelake.jpg" alt="A lake with pine trees">
+                                    <img src="../assets/img/articles/holo/pinelake.jpg" alt="A lake with pine trees">
                                     <div class="shader__layer specular">
                                         <div class="shader__layer mask"></div>
                                     </div>
@@ -1386,7 +1386,7 @@
                             </div>
                             <div class="frame frame--sticker">
                                 <div class="shader">
-                                    <img src="../robbowen.digital/assets/img/articles/holo/dash.jpg" alt="The dashboard of a vintage car">
+                                    <img src="../assets/img/articles/holo/dash.jpg" alt="The dashboard of a vintage car">
                                     <div class="shader__layer specular">
                                         <div class="shader__layer mask"></div>
                                     </div>
@@ -1453,7 +1453,7 @@
                                         <span class="portrait__bg dots" data-drift="-10 -10"></span>
                                         <div class="portrait__image">
                                             <span class="duotone">
-                                                <img src="../robbowen.digital/assets/img/portrait_small.jpg">
+                                                <img src="../assets/img/portrait_small.jpg">
                                             </span>
                                         </div>
                                     </div>
@@ -1475,7 +1475,7 @@
             </main>
             <small class="made-in-wales">© MMXXIV. Gwneud yn Ne Cymru.</small>
         </div>
-        <script src="../robbowen.digital/assets/js/main.js"></script>
-        <script class="custom-js" src="../robbowen.digital/assets/js/articles/shader.js"></script>
+        <script src="../assets/js/main.js"></script>
+        <script class="custom-js" src="../assets/js/articles/shader.js"></script>
     </body>
 </html>
