@@ -1,36 +1,37 @@
 <!DOCTYPE html>
+
 <html class="no-js" lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Holograms, light-leaks and how to build CSS-only shaders - Robb Owen</title>
-        <meta name="description" content="Get a shiny WebGL look without actually using WebGL. In this article we take a look at how CSS blend modes unleash the potential of cool compositing effects without the need for JavaScript">
-        <meta name="theme-color" content="#69ecc6">
-        <meta name="color-scheme" content="only light">
-        <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16x16.png">
-        <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
-        <link href="https://front-end.social/@robb" rel="me">
-        <meta property="og:site_name" content="Robb Owen Digital">
-        <meta property="og:type" content="website">
-        <meta property="og:locale" content="en_gb">
-        <meta property="og:url" content="https://wrote-about/css-blend-mode-shaders/">
-        <meta property="og:title" content="Holograms, light-leaks and how to build CSS-only shaders - Robb Owen ">
-        <meta property="og:description" content="Get a shiny WebGL look without actually using WebGL. In this article we take a look at how CSS blend modes unleash the potential of cool compositing effects without the need for JavaScript">
-        <meta property="og:image" content="https://assets/img/cards/css-blend-mode-shaders.png">
-        <meta name="twitter:image" content="https://assets/img/cards/css-blend-mode-shaders.png">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:creator" content="@Robb0wen">
-        <link href="/feed.xml" rel="alternate" type="application/rss+xml" title="RSS Feed">
-        <script>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+<title>Holograms, light-leaks and how to build CSS-only shaders - Robb Owen</title>
+<meta content="Get a shiny WebGL look without actually using WebGL. In this article we take a look at how CSS blend modes unleash the potential of cool compositing effects without the need for JavaScript" name="description"/>
+<meta content="#69ecc6" name="theme-color"/>
+<meta content="only light" name="color-scheme"/>
+<link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="../assets/img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../assets/img/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="../assets/img/favicon.ico" rel="icon" type="image/png"/>
+<link href="https://front-end.social/@robb" rel="me"/>
+<meta content="Robb Owen Digital" property="og:site_name"/>
+<meta content="website" property="og:type"/>
+<meta content="en_gb" property="og:locale"/>
+<meta content="https://wrote-about/css-blend-mode-shaders/" property="og:url"/>
+<meta content="Holograms, light-leaks and how to build CSS-only shaders - Robb Owen " property="og:title"/>
+<meta content="Get a shiny WebGL look without actually using WebGL. In this article we take a look at how CSS blend modes unleash the potential of cool compositing effects without the need for JavaScript" property="og:description"/>
+<meta content="https://assets/img/cards/css-blend-mode-shaders.png" property="og:image"/>
+<meta content="https://assets/img/cards/css-blend-mode-shaders.png" name="twitter:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="@Robb0wen" name="twitter:creator"/>
+<link href="/feed.xml" rel="alternate" title="RSS Feed" type="application/rss+xml"/>
+<script>
             document.querySelector('html').classList.add('js');
             document.querySelector('html').classList.remove('no-js');
         </script>
-        <link href="https://fonts.googleapis.com/css?family=Kantumruy Pro:500,700&amp;display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="../assets/css/styles.css">
-        <style id="theme">
+<link href="https://fonts.googleapis.com/css?family=Kantumruy Pro:500,700&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/css/styles.css" rel="stylesheet"/>
+<style id="theme">
             :root {
                 --bg: #f9f6f9;
                 --line: #6000cb;
@@ -51,138 +52,138 @@
                 background-size: 12px
             }
         </style>
-    </head>
-    <body>
-        <a class="skip-link u-vhide" href="#main-content">Skip to content</a>
-        <div class="loading loading--in">
-            <div class="loading__mask"></div>
-            <div class="loader">
-                <div class="lds-ellipsis">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </div>
-        </div>
-        <div class="pagewrap">
-            <div class="mainnav">
-                <div class="logo-wrap">
-                    <a href="/">
-                        <span class="u-vhide">Back to the homepage</span>
-                        <span class="logo js-logo">
-                            <div class="logo__blorenge">
-                                <div class="shade" data-drift="-10 -10">
-                                    <svg version="1.1" x="0px" y="0px" viewBox="0 0 256 256">
-                                        <polygon class="filled-poly" points="172,110 98,110 36.2,188 110.2,188 159.7,188 233.7,188 "></polygon>
-                                    </svg>
-                                </div>
-                                <div class="logo">
-                                    <svg version="1.1" x="0px" y="0px" viewBox="0 0 256 256">
-                                        <polygon class="stroke-poly" points="90,99 28.2,177 151.7,177 "></polygon>
-                                        <polygon class="stroke-poly" points="164,99 102.2,177 225.7,177 "></polygon>
-                                        <line class="stroke-poly" x1="90" y1="99" x2="163.8" y2="99"></line>
-                                    </svg>
-                                </div>
-                            </div>
-                        </span>
-                    </a>
-                </div>
-                <div class="menu-link">
-                    <button class="menu-link__trigger js-menu-trigger" aria-expanded="false" aria-controls="main-menu">
-                        <span class="menu-link__mask">
-                            <span class="menu-link__label menu-link__label--close js-menu-label-close" aria-hidden="true">Close</span>
-                            <span class="menu-link__label menu-link__label--open js-menu-label-open" aria-hidden="false">Menu</span>
-                        </span>
-                    </button>
-                </div>
-                <a class="hire-me" href="mailto:hello@robbowen.digital?subject=🤘 Hi Robb, I'd like to hire you">
-                    <div class="shade" data-drift="-4 -6" data-drift-center="y">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
-                            <path class="filled-path" d="M30.78,9.87c13.52,0,24.46,9.58,24.46,21.41a19.4,19.4,0,0,1-5,12.95h0l2.9,9.82L42.37,50.1h0a27.51,27.51,0,0,1-11.59,2.58,26.84,26.84,0,0,1-14-3.86C10.42,45,6.24,38.52,6.24,31.2,6.24,19.53,17.26,9.87,30.78,9.87Z"></path>
-                        </svg>
-                    </div>
-                    <div class="main">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
-                            <path class="stroke-path" d="M27.78,5.87c13.52,0,24.46,9.58,24.46,21.41a19.4,19.4,0,0,1-5,12.95h0l2.9,9.82L39.37,46.1h0a27.51,27.51,0,0,1-11.59,2.58,26.84,26.84,0,0,1-14-3.86C7.42,41,3.24,34.52,3.24,27.2,3.24,15.53,14.26,5.87,27.78,5.87Z"></path>
-                        </svg>
-                    </div>
+</head>
+<body>
+<a class="skip-link u-vhide" href="#main-content">Skip to content</a>
+<div class="loading loading--in">
+<div class="loading__mask"></div>
+<div class="loader">
+<div class="lds-ellipsis">
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+</div>
+</div>
+</div>
+<div class="pagewrap">
+<div class="mainnav">
+<div class="logo-wrap">
+<a href="/">
+<span class="u-vhide">Back to the homepage</span>
+<span class="logo js-logo">
+<div class="logo__blorenge">
+<div class="shade" data-drift="-10 -10">
+<svg version="1.1" viewbox="0 0 256 256" x="0px" y="0px">
+<polygon class="filled-poly" points="172,110 98,110 36.2,188 110.2,188 159.7,188 233.7,188 "></polygon>
+</svg>
+</div>
+<div class="logo">
+<svg version="1.1" viewbox="0 0 256 256" x="0px" y="0px">
+<polygon class="stroke-poly" points="90,99 28.2,177 151.7,177 "></polygon>
+<polygon class="stroke-poly" points="164,99 102.2,177 225.7,177 "></polygon>
+<line class="stroke-poly" x1="90" x2="163.8" y1="99" y2="99"></line>
+</svg>
+</div>
+</div>
+</span>
+</a>
+</div>
+<div class="menu-link">
+<button aria-controls="main-menu" aria-expanded="false" class="menu-link__trigger js-menu-trigger">
+<span class="menu-link__mask">
+<span aria-hidden="true" class="menu-link__label menu-link__label--close js-menu-label-close">Close</span>
+<span aria-hidden="false" class="menu-link__label menu-link__label--open js-menu-label-open">Menu</span>
+</span>
+</button>
+</div>
+<a class="hire-me" href="mailto:hello@robbowen.digital?subject=🤘 Hi Robb, I'd like to hire you">
+<div class="shade" data-drift="-4 -6" data-drift-center="y">
+<svg viewbox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+<path class="filled-path" d="M30.78,9.87c13.52,0,24.46,9.58,24.46,21.41a19.4,19.4,0,0,1-5,12.95h0l2.9,9.82L42.37,50.1h0a27.51,27.51,0,0,1-11.59,2.58,26.84,26.84,0,0,1-14-3.86C10.42,45,6.24,38.52,6.24,31.2,6.24,19.53,17.26,9.87,30.78,9.87Z"></path>
+</svg>
+</div>
+<div class="main">
+<svg viewbox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+<path class="stroke-path" d="M27.78,5.87c13.52,0,24.46,9.58,24.46,21.41a19.4,19.4,0,0,1-5,12.95h0l2.9,9.82L39.37,46.1h0a27.51,27.51,0,0,1-11.59,2.58,26.84,26.84,0,0,1-14-3.86C7.42,41,3.24,34.52,3.24,27.2,3.24,15.53,14.26,5.87,27.78,5.87Z"></path>
+</svg>
+</div>
                     Hire me
                 </a>
-            </div>
-            <div class="main-menu js-menu" id="main-menu">
-                <div class="main-menu__mask"></div>
-                <div class="main-menu__flyout">
-                    <div class="main-menu__inr wrap">
-                        <ul class="social-links">
-                            <li class="social-links__item">
-                                <a class="social-links__link social-links__link--ma" href="https://front-end.social/@Robb" rel="noopener noreferrer" target="_blank">Follow me on Mastodon</a>
-                            </li>
-                            <li class="social-links__item">
-                                <a class="social-links__link social-links__link--in" href="http://www.instagram.com/robb0wen" rel="noopener noreferrer" target="_blank">Follow me on Instagram</a>
-                            </li>
-                            <li class="social-links__item">
-                                <a class="social-links__link social-links__link--gh" href="https://github.com/robb0wen" rel="noopener noreferrer" target="_blank">Visit my GitHub</a>
-                            </li>
-                            <li class="social-links__item">
-                                <a class="social-links__link social-links__link--rss" href="/feed.xml" rel="noopener noreferrer" target="_blank" data-rekishi-skip="">Subscribe to my RSS feed</a>
-                            </li>
-                            <li class="social-links__item">
-                                <a class="social-links__link social-links__link--email" href="mailto:hello@robbowen.digital" rel="noopener noreferrer" target="_blank">Send me an Email</a>
-                            </li>
-                        </ul>
-                        <ul class="main-menu__links primary-links">
-                            <li class="primary-links__item">
-                                <a aria-current="page" class="primary-links__link t-primary" href="/" aria-describedby="desc_home">Home</a>
-                                <span id="desc_home" class="primary-links__summary">Back to the home page.</span>
-                            </li>
-                            <li class="primary-links__item">
-                                <a aria-current="page" class="primary-links__link t-primary" href="/work" aria-describedby="desc_work">Work</a>
-                                <span id="desc_work" class="primary-links__summary">My approach to development.</span>
-                            </li>
-                            <li class="primary-links__item">
-                                <a class="primary-links__link t-primary" href="/about" aria-describedby="desc_about">About</a>
-                                <span id="desc_about" class="primary-links__summary">A little about me and my background.</span>
-                            </li>
-                            <li class="primary-links__item">
-                                <a class="primary-links__link t-primary" href="/writing" aria-describedby="desc_writing">Writing</a>
-                                <span id="desc_writing" class="primary-links__summary">My latest writing on tech and language.</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <main id="main-content" class="page-body" tabindex="-1"></main>
-                <svg style="position:absolute;top:-900px;left:-900px;clip:rect(0,0,0,0)">
-                    <filter id="duotone_filter">
-                        <feColorMatrix type="matrix" result="grayscale" values="1 0 0 0 0
+</div>
+<div class="main-menu js-menu" id="main-menu">
+<div class="main-menu__mask"></div>
+<div class="main-menu__flyout">
+<div class="main-menu__inr wrap">
+<ul class="social-links">
+<li class="social-links__item">
+<a class="social-links__link social-links__link--ma" href="https://front-end.social/@Robb" rel="noopener noreferrer" target="_blank">Follow me on Mastodon</a>
+</li>
+<li class="social-links__item">
+<a class="social-links__link social-links__link--in" href="http://www.instagram.com/robb0wen" rel="noopener noreferrer" target="_blank">Follow me on Instagram</a>
+</li>
+<li class="social-links__item">
+<a class="social-links__link social-links__link--gh" href="https://github.com/robb0wen" rel="noopener noreferrer" target="_blank">Visit my GitHub</a>
+</li>
+<li class="social-links__item">
+<a class="social-links__link social-links__link--rss" data-rekishi-skip="" href="/feed.xml" rel="noopener noreferrer" target="_blank">Subscribe to my RSS feed</a>
+</li>
+<li class="social-links__item">
+<a class="social-links__link social-links__link--email" href="mailto:hello@robbowen.digital" rel="noopener noreferrer" target="_blank">Send me an Email</a>
+</li>
+</ul>
+<ul class="main-menu__links primary-links">
+<li class="primary-links__item">
+<a aria-current="page" aria-describedby="desc_home" class="primary-links__link t-primary" href="/">Home</a>
+<span class="primary-links__summary" id="desc_home">Back to the home page.</span>
+</li>
+<li class="primary-links__item">
+<a aria-current="page" aria-describedby="desc_work" class="primary-links__link t-primary" href="/work">Work</a>
+<span class="primary-links__summary" id="desc_work">My approach to development.</span>
+</li>
+<li class="primary-links__item">
+<a aria-describedby="desc_about" class="primary-links__link t-primary" href="/about">About</a>
+<span class="primary-links__summary" id="desc_about">A little about me and my background.</span>
+</li>
+<li class="primary-links__item">
+<a aria-describedby="desc_writing" class="primary-links__link t-primary" href="/writing">Writing</a>
+<span class="primary-links__summary" id="desc_writing">My latest writing on tech and language.</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<main class="page-body" id="main-content" tabindex="-1"></main>
+<svg style="position:absolute;top:-900px;left:-900px;clip:rect(0,0,0,0)">
+<filter id="duotone_filter">
+<fecolormatrix result="grayscale" type="matrix" values="1 0 0 0 0
                   1 0 0 0 0
                   1 0 0 0 0
-                  0 0 0 1 0"></feColorMatrix>
-                        <feComponentTransfer color-interpolation-filters="sRGB" result="duotone">
-                            <feFuncR type="table" tableValues="0.00784313725490196 0.6039215686274509"></feFuncR>
-                            <feFuncG type="table" tableValues="0.34509803921568627 0.9921568627450981"></feFuncG>
-                            <feFuncB type="table" tableValues="0.25098039215686274 0.8823529411764706"></feFuncB>
-                            <feFuncA type="table" tableValues="0 1"></feFuncA>
-                        </feComponentTransfer>
-                    </filter>
-                </svg>
-                <div class="article" data-reveal="is-onscreen">
-                    <div>
-                        <div class="article-heading">
-                            <span class="article-heading__byline">7th July 2022</span>
-                            <h1 class="article-heading__title t-heading t-medium:s t-big:m t-bigger:l">
-                                <span>
+                  0 0 0 1 0"></fecolormatrix>
+<fecomponenttransfer color-interpolation-filters="sRGB" result="duotone">
+<fefuncr tablevalues="0.00784313725490196 0.6039215686274509" type="table"></fefuncr>
+<fefuncg tablevalues="0.34509803921568627 0.9921568627450981" type="table"></fefuncg>
+<fefuncb tablevalues="0.25098039215686274 0.8823529411764706" type="table"></fefuncb>
+<fefunca tablevalues="0 1" type="table"></fefunca>
+</fecomponenttransfer>
+</filter>
+</svg>
+<div class="article" data-reveal="is-onscreen">
+<div>
+<div class="article-heading">
+<span class="article-heading__byline">7th July 2022</span>
+<h1 class="article-heading__title t-heading t-medium:s t-big:m t-bigger:l">
+<span>
                                     API Lifecycle: A Developer Perspective<span class="dot">.</span>
-                                </span>
-                                <span>
+</span>
+<span>
                                     APIs power our digital world. Let's dive deep into their ecosystem:<span class="dot">.</span>
-                                </span>
-                            </h1>
-                        </div>
-                    </div>
-                    <div class="article__content flow reveal-content">
-                        <style>
+</span>
+</h1>
+</div>
+</div>
+<div class="article__content flow reveal-content">
+<style>
                             .spec-example {
                                 margin: 50px 0;
                                 display: flex;
@@ -382,173 +383,161 @@
                                 display: none
                             }
                         </style>
-                        <div style="margin-top: 50px">
-                            <img style="size: 50%;" src="../assets/img/SafetyBanner.jpg" alt="How to Protect Yourself & Others From CoronaVirus">
-                            
-                        </div>
-
-                        <div style="margin-top: 50px">
-                            <h4 class="t-heading t-lede:s t-medium:m t-medium:l">
+<div style="margin-top: 50px">
+<img alt="How to Protect Yourself &amp; Others From CoronaVirus" src="../assets/img/SafetyBanner.jpg" style="size: 50%;"/>
+</div>
+<div style="margin-top: 50px">
+<h4 class="t-heading t-lede:s t-medium:m t-medium:l">
                                 𝟴 𝗘𝘀𝘀𝗲𝗻𝘁𝗶𝗮𝗹 𝗔𝗣𝗜 𝗧𝘆𝗽𝗲𝘀:
                             </h4>
-                            <p>
-                                <ul>
-                                    <li><strong>REST (REpresentational State Transfer)</strong>: A scalable, stateless architecture for building web services.</li>
-                                    <li><strong>SOAP (Simple Object Access Protocol)</strong>: An XML-based messaging protocol for exchanging structured information.</li>
-                                    <li><strong>GraphQL</strong>: A query language for APIs that allows clients to specify exactly what data they need.</li>
-                                    <li><strong>AMQP (Advanced Message Queuing Protocol)</strong>: A reliable and flexible messaging protocol for distributed systems.</li>
-                                    <li><strong>MQTT (Message Queuing Telemetry Transport)</strong>: A lightweight, publish-subscribe messaging protocol designed for IoT devices.</li>
-                                    <li><strong>WebSocket</strong>: A protocol for full-duplex, bidirectional communication over a single TCP connection.</li>
-                                    <li><strong>gRPC</strong>: A high-performance, open-source RPC framework that uses HTTP/2 for transport and Protocol Buffers for serialization.</li>
-                                    <li><strong>Webhook</strong>: An HTTP callback triggered by events in a third-party application.</li>
-                                  </ul>
-                            </p>
-                        </div>
-
-                        <div style="margin-top: 50px">
-                            <img class="" src="../assets/img/Mask.jpg" alt="𝟵 𝗖𝗿𝘂𝗰𝗶𝗮𝗹 𝗔𝗣𝗜 𝗠𝗲𝘁𝗵𝗼𝗱𝘀:">
-                            <h4 class="t-heading t-lede:s t-medium:m t-medium:l" >
+<p>
+<ul>
+<li><strong>REST (REpresentational State Transfer)</strong>: A scalable, stateless architecture for building web services.</li>
+<li><strong>SOAP (Simple Object Access Protocol)</strong>: An XML-based messaging protocol for exchanging structured information.</li>
+<li><strong>GraphQL</strong>: A query language for APIs that allows clients to specify exactly what data they need.</li>
+<li><strong>AMQP (Advanced Message Queuing Protocol)</strong>: A reliable and flexible messaging protocol for distributed systems.</li>
+<li><strong>MQTT (Message Queuing Telemetry Transport)</strong>: A lightweight, publish-subscribe messaging protocol designed for IoT devices.</li>
+<li><strong>WebSocket</strong>: A protocol for full-duplex, bidirectional communication over a single TCP connection.</li>
+<li><strong>gRPC</strong>: A high-performance, open-source RPC framework that uses HTTP/2 for transport and Protocol Buffers for serialization.</li>
+<li><strong>Webhook</strong>: An HTTP callback triggered by events in a third-party application.</li>
+</ul>
+</p>
+</div>
+<div style="margin-top: 50px">
+<img alt="𝟵 𝗖𝗿𝘂𝗰𝗶𝗮𝗹 𝗔𝗣𝗜 𝗠𝗲𝘁𝗵𝗼𝗱𝘀:" class="" src="../assets/img/Mask.jpg"/>
+<h4 class="t-heading t-lede:s t-medium:m t-medium:l">
                                 𝟵 𝗖𝗿𝘂𝗰𝗶𝗮𝗹 𝗔𝗣𝗜 𝗠𝗲𝘁𝗵𝗼𝗱𝘀:
                             </h4>
-                            <p>
-                                <ul>
-                                    <li><strong>GET</strong>: Retrieves data from the server.</li>
-                                    <li><strong>POST</strong>: Creates new resources on the server.</li>
-                                    <li><strong>PUT</strong>: Updates existing resources on the server.</li>
-                                    <li><strong>DELETE</strong>: Removes resources from the server.</li>
-                                    <li><strong>PATCH</strong>: Partially modifies existing resources on the server.</li>
-                                    <li><strong>HEAD</strong>: Requests metadata about a resource without returning the body.</li>
-                                    <li><strong>OPTIONS</strong>: Requests information about the communication options available for a resource.</li>
-                                    <li><strong>CONNECT</strong>: Establishes a network connection to a resource.</li>
-                                    <li><strong>TRACE</strong>: Performs a message loop-back test to diagnose network problems.</li>
-                                  </ul>
-                            </p>
-                        </div>
-                        <div style="margin-top: 50px">
-                            <img class="" src="../assets/img/SocialDistance.png" alt="Key Status Codes to Know:">
-                            <h4 class="t-heading t-lede:s t-medium:m t-medium:l" >
+<p>
+<ul>
+<li><strong>GET</strong>: Retrieves data from the server.</li>
+<li><strong>POST</strong>: Creates new resources on the server.</li>
+<li><strong>PUT</strong>: Updates existing resources on the server.</li>
+<li><strong>DELETE</strong>: Removes resources from the server.</li>
+<li><strong>PATCH</strong>: Partially modifies existing resources on the server.</li>
+<li><strong>HEAD</strong>: Requests metadata about a resource without returning the body.</li>
+<li><strong>OPTIONS</strong>: Requests information about the communication options available for a resource.</li>
+<li><strong>CONNECT</strong>: Establishes a network connection to a resource.</li>
+<li><strong>TRACE</strong>: Performs a message loop-back test to diagnose network problems.</li>
+</ul>
+</p>
+</div>
+<div style="margin-top: 50px">
+<img alt="Key Status Codes to Know:" class="" src="../assets/img/SocialDistance.png"/>
+<h4 class="t-heading t-lede:s t-medium:m t-medium:l">
                                 Key Status Codes to Know:
                             </h4>
-                            <p>
-                                <ul>
-                                    <li><strong>2xx: Success</strong></li>
-                                    <ul>
-                                      <li>200 OK: The request has succeeded.</li>
-                                      <li>201 Created: The request has succeeded, and a new resource has been created.</li>
-                                    </ul>
-                                    <li><strong>3xx: Redirection</strong></li>
-                                    <ul>
-                                      <li>301 Moved Permanently: The requested resource has been permanently moved to a new location.</li>
-                                    </ul>
-                                    <li><strong>4xx: Client Errors</strong></li>
-                                    <ul>
-                                      <li>400 Bad Request: The server cannot or will not process the request due to a client error.</li>
-                                      <li>404 Not Found: The requested resource could not be found.</li>
-                                    </ul>
-                                    <li><strong>5xx: Server Errors</strong></li>
-                                    <ul>
-                                      <li>500 Internal Server Error: The server encountered an unexpected condition that prevented it from fulfilling the request.</li>
-                                    </ul>
-                                  </ul>
-                            </p>
-                        </div>
-                        <div style="margin-top: 50px">
-                            <img class="" src="../assets/img/WashHand.png" alt="𝗔𝗣𝗜 𝗗𝗲𝘀𝗶𝗴𝗻 𝗕𝗲𝘀𝘁 𝗣𝗿𝗮𝗰𝘁𝗶𝗰𝗲𝘀:">
-                            <h4 class="t-heading t-lede:s t-medium:m t-medium:l" >
+<p>
+<ul>
+<li><strong>2xx: Success</strong></li>
+<ul>
+<li>200 OK: The request has succeeded.</li>
+<li>201 Created: The request has succeeded, and a new resource has been created.</li>
+</ul>
+<li><strong>3xx: Redirection</strong></li>
+<ul>
+<li>301 Moved Permanently: The requested resource has been permanently moved to a new location.</li>
+</ul>
+<li><strong>4xx: Client Errors</strong></li>
+<ul>
+<li>400 Bad Request: The server cannot or will not process the request due to a client error.</li>
+<li>404 Not Found: The requested resource could not be found.</li>
+</ul>
+<li><strong>5xx: Server Errors</strong></li>
+<ul>
+<li>500 Internal Server Error: The server encountered an unexpected condition that prevented it from fulfilling the request.</li>
+</ul>
+</ul>
+</p>
+</div>
+<div style="margin-top: 50px">
+<img alt="𝗔𝗣𝗜 𝗗𝗲𝘀𝗶𝗴𝗻 𝗕𝗲𝘀𝘁 𝗣𝗿𝗮𝗰𝘁𝗶𝗰𝗲𝘀:" class="" src="../assets/img/WashHand.png"/>
+<h4 class="t-heading t-lede:s t-medium:m t-medium:l">
                                 𝗔𝗣𝗜 𝗗𝗲𝘀𝗶𝗴𝗻 𝗕𝗲𝘀𝘁 𝗣𝗿𝗮𝗰𝘁𝗶𝗰𝗲𝘀:
                             </h4>
-                            <p>
-                                <ul>
-                                    <li><strong>Use clear, versioned endpoints</strong> (e.g., /api/v2/articles) to indicate the API version and prevent breaking changes.</li>
-                                    <li><strong>Implement filtering, sorting, and pagination</strong> to allow clients to customize the data returned.</li>
-                                    <li><strong>Use robust authentication</strong> (e.g., OAuth 2.0, JWT) to protect your API from unauthorized access.</li>
-                                    <li><strong>Specify accepted content types</strong> (e.g., application/json) to ensure compatibility with different clients.</li>
-                                    <li><strong>Provide comprehensive documentation</strong> to guide developers on how to use your API.</li>
-                                    <li><strong>Implement rate limiting</strong> to prevent abuse and ensure API stability.</li>
-                                    <li><strong>Provide consistent error handling and messaging</strong> to help developers troubleshoot and debug issues.</li>
-                                  </ul>
-                            </p>
-                        </div>
-                        <div style="margin-top: 50px">
-                            <img class="" src="../assets/img/StayHome.png" alt="Monitor your health daily">
-                            <h4 class="t-heading t-lede:s t-medium:m t-medium:l" >
+<p>
+<ul>
+<li><strong>Use clear, versioned endpoints</strong> (e.g., /api/v2/articles) to indicate the API version and prevent breaking changes.</li>
+<li><strong>Implement filtering, sorting, and pagination</strong> to allow clients to customize the data returned.</li>
+<li><strong>Use robust authentication</strong> (e.g., OAuth 2.0, JWT) to protect your API from unauthorized access.</li>
+<li><strong>Specify accepted content types</strong> (e.g., application/json) to ensure compatibility with different clients.</li>
+<li><strong>Provide comprehensive documentation</strong> to guide developers on how to use your API.</li>
+<li><strong>Implement rate limiting</strong> to prevent abuse and ensure API stability.</li>
+<li><strong>Provide consistent error handling and messaging</strong> to help developers troubleshoot and debug issues.</li>
+</ul>
+</p>
+</div>
+<div style="margin-top: 50px">
+<img alt="Monitor your health daily" class="" src="../assets/img/StayHome.png"/>
+<h4 class="t-heading t-lede:s t-medium:m t-medium:l">
                                 Monitor your health daily
                             </h4>
-                            <p>Be alert for symptoms. Watch for fever, cough, shortness of breath, or other symptoms of COVID-19.</p>
-                                <ul><li>Especially important if you are running essential errands, going into the office or workplace, and in settings where it may be difficult to keep a physical distance of 6 feet.</li></ul>
-
-                            <p>Take your temperature if symptoms develop.</p>
-                                <ul><li>Don’t take your temperature within 30 minutes of exercising or after taking medications that could lower your temperature, like acetaminophen.</li></ul>
-
-                            <p>Follow CDC guidance if symptoms develop.</p>
-                        </div>
-                        <div style="margin-top: 50px">
-                            <img class="" src="../assets/img/Vaccinated.jpg" alt="Coronavirus Vaccine - Get Vaccinated">
-                            <h4 class="t-heading t-lede:s t-medium:m t-medium:l">
+<p>Be alert for symptoms. Watch for fever, cough, shortness of breath, or other symptoms of COVID-19.</p>
+<ul><li>Especially important if you are running essential errands, going into the office or workplace, and in settings where it may be difficult to keep a physical distance of 6 feet.</li></ul>
+<p>Take your temperature if symptoms develop.</p>
+<ul><li>Don’t take your temperature within 30 minutes of exercising or after taking medications that could lower your temperature, like acetaminophen.</li></ul>
+<p>Follow CDC guidance if symptoms develop.</p>
+</div>
+<div style="margin-top: 50px">
+<img alt="Coronavirus Vaccine - Get Vaccinated" class="" src="../assets/img/Vaccinated.jpg"/>
+<h4 class="t-heading t-lede:s t-medium:m t-medium:l">
                                 Coronavirus Vaccine - Get Vaccinated
                             </h4>
-                            <p>
-                                <ul>
-                                    <li>Vaccines are designed to help our immune system fight off against infectious diseases, so uou don't get sick and don't spread the disease.</li>
-
-                                    <li>COVID-19 vaccination will be an important tool to help stop the pandemic.</li>
-
-                                    <li>A growing body of evidence suggests that fully vaccinated people are less likely to be infected without showing symptoms (called an asymptomatic infection) and potentially less likely to spread the virus that causes COVID-19 to others.</li>
-
-                                    <li>Once you are fully vaccinated, you may be able to start doing some things that you had stopped doing because of the pandemic.</li>
-
-                                </ul>
-                            </p>
-                        </div>
-                        <div style="margin-top: 50px">
-                            <img  src="../assets/img/Clean&Disinfect.jpg" alt="Clean & Disinfect Your Home When Someone Is Sick">
-                            <h4 class="t-heading t-lede:s t-medium:m t-medium:l">
-                                Clean & Disinfect Your Home When Someone Is Sick
+<p>
+<ul>
+<li>Vaccines are designed to help our immune system fight off against infectious diseases, so uou don't get sick and don't spread the disease.</li>
+<li>COVID-19 vaccination will be an important tool to help stop the pandemic.</li>
+<li>A growing body of evidence suggests that fully vaccinated people are less likely to be infected without showing symptoms (called an asymptomatic infection) and potentially less likely to spread the virus that causes COVID-19 to others.</li>
+<li>Once you are fully vaccinated, you may be able to start doing some things that you had stopped doing because of the pandemic.</li>
+</ul>
+</p>
+</div>
+<div style="margin-top: 50px">
+<img alt="Clean &amp; Disinfect Your Home When Someone Is Sick" src="../assets/img/Clean&amp;Disinfect.jpg"/>
+<h4 class="t-heading t-lede:s t-medium:m t-medium:l">
+                                Clean &amp; Disinfect Your Home When Someone Is Sick
                             </h4>
-                            <p>
-                                <ul>
-                                    <li>Clean high touch surfaces daily. This includes tables, doorknobs, light switches, countertops, handles, desks, phones, keyboards, toilets, faucets, and sinks.</li>
-
-                                    <li>If someone is sick or has tested positive for COVID-19, disinfect frequently touched surfaces.</li>
-
-                                    <li>If surfaces are dirty, clean them using detergent or soap and water prior to disinfection.</li>
-
-                                </ul>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                    <footer class="article__footer">
-                        <div class="author">
-                            <div class="author__inr">
-                                <div class="author__portrait">
-                                    <div class="portrait">
-                                        <span class="portrait__bg dots" data-drift="-10 -10"></span>
-                                        <div class="portrait__image">
-                                            <span class="duotone">
-                                                <img src="../assets/img/portrait_small.jpg">
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="author__bio flow">
-                                    <h4 class="t-heading t-sublede:s t-lede:m t-medium:l">
+<p>
+<ul>
+<li>Clean high touch surfaces daily. This includes tables, doorknobs, light switches, countertops, handles, desks, phones, keyboards, toilets, faucets, and sinks.</li>
+<li>If someone is sick or has tested positive for COVID-19, disinfect frequently touched surfaces.</li>
+<li>If surfaces are dirty, clean them using detergent or soap and water prior to disinfection.</li>
+</ul>
+</p>
+</div>
+</div>
+</div>
+<footer class="article__footer">
+<div class="author">
+<div class="author__inr">
+<div class="author__portrait">
+<div class="portrait">
+<span class="portrait__bg dots" data-drift="-10 -10"></span>
+<div class="portrait__image">
+<span class="duotone">
+<img alt="Profile portrait" src="../assets/img/portrait_small.jpg"/>
+</span>
+</div>
+</div>
+</div>
+<div class="author__bio flow">
+<h4 class="t-heading t-sublede:s t-lede:m t-medium:l">
                                         Hi, my name is Urvish<span class="dot">.</span>
-                                    </h4>
-                                    <p>I'm a freelance creative developer helping awesome people to build ambitious yet accessible web projects.</p>
-                                    <a href="mailto:urvish03@gmail.com?subject=🤘 Hi Urvish, I'd like to hire you" class="btn author__cta">
-                                        <span class="btn__label">Hire me</span>
-                                        <span class="btn__fill stripes" data-drift="-10 -12" aria-hidden="true">Hire me</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
-                </div>
-            </main>
-            <small class="made-in-wales">© MMXXIV. Gwneud yn Ne Cymru.</small>
-        </div>
-        <script src="../assets/js/main.js"></script>
-        <script class="custom-js" src="../assets/js/articles/shader.js"></script>
-    </body>
+</h4>
+<p>I'm a freelance creative developer helping awesome people to build ambitious yet accessible web projects.</p>
+<a class="btn author__cta" href="mailto:urvish03@gmail.com?subject=🤘 Hi Urvish, I'd like to hire you">
+<span class="btn__label">Hire me</span>
+<span aria-hidden="true" class="btn__fill stripes" data-drift="-10 -12">Hire me</span>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+
+<small class="made-in-wales">© MMXXIV. Gwneud yn Ne Cymru.</small>
+
+<script src="../assets/js/main.js"></script>
+<script class="custom-js" src="../assets/js/articles/shader.js"></script>
+</body>
 </html>
