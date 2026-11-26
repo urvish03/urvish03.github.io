@@ -4332,3 +4332,29 @@ html:not(.is-loading).js .is-onscreen .reveal-content {
 .author__cta {
     margin: 0 auto
 }
+
+/* Accessibility and small-screen safety improvements */
+:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 4px;
+}
+
+@media (max-width: 767px) {
+    html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    .menu-link__trigger {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
